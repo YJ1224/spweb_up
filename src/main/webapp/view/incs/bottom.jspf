@@ -1,0 +1,18 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<div class="jumbotron text-center" style="margin-bottom:0; background:#000000;">
+     <footer>
+    <address><font color="#ffffff"> All contents copyright SNSmedia Corp, ltd. Contact: tpdl5832@naver.com<br>
+             충청남도 천안시 서북구 성정공원5로 35 6층 휴먼교육센터 | Tel : 031-123-4567  Fax : 02-123-4567</font>
+    </address>
+    </footer>
+    </div>
+</body>
+</html>
