@@ -11,14 +11,12 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.hyj.dao.Dao;
 
-/* 怨듯넻湲곕뒫援ы쁽 �겢�옒�뒪 : */
 public class Ic implements HandlerInterceptor {
 	
 	@Autowired
 	Dao dao;
 
 	@Override 
-	// �듅�젙 踰붿쐞�쓽 �뙣�궎吏��뿉 �엳�뒗 硫붿꽌�뱶媛� �떎�뻾�릺湲� �쟾�뿉 �떎�뻾�맆 怨듯넻 硫붿꽌�뱶
 	public boolean preHandle(HttpServletRequest r, HttpServletResponse res, Object o)
 			throws Exception {
 		

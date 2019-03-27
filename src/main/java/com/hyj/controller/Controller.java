@@ -37,19 +37,20 @@ public class Controller {
 	@Resource
 	private String upath;
 
-	// È¸¿ø°¡ÀÔ
+	// íšŒì›ê°€ì… í¼
 	@GetMapping("join.do")
 	public String jointestGet() {
 		return "admin/join";
 	}
-
+	
+	// íšŒì›ê°€ì…
 	@RequestMapping(value = "join.do", method = RequestMethod.POST)
 	public String jointestPost(@RequestParam Map<String, String> pm) {
 		sv.insert(pm);
 		return "admin/login";
 	}
 	
-	// ¾ÆÀÌµğ Áßº¹ È®ÀÎ
+	// ì¤‘ë³µí™•ì¸
 	@GetMapping(value="idCheck.do")
 	public String idcheck(@RequestParam String userid){
 		int result = sv.idcheck(userid);
@@ -63,27 +64,27 @@ public class Controller {
 		return redirect;		
 	}
 
-	// ·Î±×¾Æ¿ô
+	// ë¡œê·¸ì•„ì›ƒ
 	@RequestMapping("logout")
 	public String logout(HttpSession session) {
 		session.invalidate();
 		return "../index";
 	}
-
+	
+	// ë¡œê·¸ì¸ í¼
 	@GetMapping("/login")
 	public String login() {
 		return "admin/login";
 	}
 
-	// »óÇ°µî·Ï
-	// ¿äÃ» GET/daotest.do
+	// ìƒí’ˆë“±ë¡ í¼
 	@GetMapping("upform")
 	public String imgtestGet() {
 		return "admin/upform";
 
 	}
 
-	// ¿äÃ» POST/daotest.do
+	// ìƒí’ˆë“±ë¡
 	@RequestMapping(value = "/up", method = RequestMethod.POST)
 	public ModelAndView imgtestPost(@RequestParam("p_name") String n, @RequestParam("c_code") String c,
 			@RequestParam("c_name") String cn, @RequestParam("p_price") String p, @RequestParam("p_stock") String s,
@@ -94,7 +95,7 @@ public class Controller {
 		return mv;
 	}
 
-	// »óÇ°¸ñ·Ï
+	// ì‹ ë°œ ìƒí’ˆ ë³´ê¸°
 	@GetMapping("/up.do")
 	public ModelAndView imgtestget() {
 		ModelAndView mv = new ModelAndView();
@@ -143,7 +144,7 @@ public class Controller {
 		return mv;
 	}
 
-	// »ó¼¼º¸±â
+	// ìƒí’ˆìƒì„¸ë³´ê¸°
 	@GetMapping("/view.do")
 	public ModelAndView view(@RequestParam("p") int p_num) {
 		ModelAndView mv = new ModelAndView();
@@ -151,7 +152,7 @@ public class Controller {
 		mv.setViewName("admin/view");
 		return mv;
 	}
-	/*--------------------------Ä«Æ®´ã±â session------------------*/
+	/*-------------------------- ì¹´íŠ¸ ë‹´ê¸° ------------------*/
 	@RequestMapping(value = "/cart", method = RequestMethod.POST)
 	public ModelAndView cart(HttpServletRequest request
 			,@RequestParam("c_stock") int c_stock
@@ -159,15 +160,12 @@ public class Controller {
 		ModelAndView mv = new ModelAndView();
 		HttpSession session = request.getSession();
 		String userid = session.getAttribute("loginUser").toString();
-		System.out.println("¾ÆÀÌµğ :"+userid);
-		System.out.println("¼ö·® :"+c_stock);
-		System.out.println("»óÇ°¹øÈ£ :"+p_num);
 		sv.cartinsert(userid, p_num, c_stock);
 		session.setAttribute("loginUser", userid);
 		mv.setViewName("redirect:/cartlist.do?u="+userid);
 		return mv;
 	}
-	/*----------------------------Ä«Æ® Á¤º¸ º¸±â---------------------*/
+	/*----------------------------ì¹´íŠ¸ ëª©ë¡ ë³´ê¸°---------------------*/
 	@GetMapping("/cartlist.do")
 	public ModelAndView view(@RequestParam("u") String userid, 
 			HttpServletRequest request,Model m) {
@@ -180,8 +178,8 @@ public class Controller {
 		return mv;
 	}
 	
-	/*------------------------ Ä«Æ® »èÁ¦ -------------------*/
-	//Ä«Æ® ºÎºĞ »èÁ¦
+	/*------------------------ ì¹´íŠ¸ ì‚­ì œ -------------------*/
+	//ë¶€ë¶„ì‚­ì œ
 	
 	@RequestMapping("delete.do")
 	public ModelAndView delete(HttpServletRequest request
@@ -189,27 +187,27 @@ public class Controller {
 		ModelAndView mv = new ModelAndView();
 		HttpSession session = request.getSession();
 		String userid = session.getAttribute("loginUser").toString();
-		System.out.println("»óÇ°¹øÈ£ :"+c_num);
-		System.out.println("¾ÆÀÌµğ :"+userid);
+		System.out.println("ë²ˆí˜¸ :"+c_num);
+		System.out.println("ì•„ì´ë”” :"+userid);
 		sv.cartdelete(c_num,userid);
 		session.setAttribute("loginUser", userid);
 		mv.setViewName("redirect:/cartlist.do?u="+userid);
 		return mv;
 	}
-	// Ä«Æ® ÀüÃ¼ »èÁ¦
+	// ì „ì²´ì‚­ì œ
 	@RequestMapping("delete2.do")
 	public ModelAndView delete(HttpServletRequest request){ 
 		ModelAndView mv = new ModelAndView();
 		HttpSession session = request.getSession();
 		String userid = session.getAttribute("loginUser").toString();
-		System.out.println("¾ÆÀÌµğ :"+userid);
+		System.out.println("ì•„ì´ë”” :"+userid);
 		sv.cartdelete1(userid);
 		session.setAttribute("loginUser", userid);
 		mv.setViewName("redirect:/cartlist.do?u="+userid);
 		return mv;
 	}
 	
-	/*------------------------- ÁÖ¹®ÇÏ±â ----------------------------*/
+	/*------------------------- ì£¼ë¬¸í•˜ê¸° ----------------------------*/
 	@RequestMapping(value = "/cartList", method = RequestMethod.POST)
 	public ModelAndView order(HttpServletRequest request,
 			@RequestParam("orderrec") String o,
@@ -219,7 +217,7 @@ public class Controller {
 		ModelAndView mv = new ModelAndView();
 		HttpSession session = request.getSession();
 		String userid = session.getAttribute("loginUser").toString();
-		// ÁÖ¹®°íÀ¯¹øÈ£ ¼³Á¤
+		// ëœë¤ë²ˆí˜¸ìƒì„±
 		 Calendar cal = Calendar.getInstance();
 		 int year = cal.get(Calendar.YEAR);
 		 String ym = year + new DecimalFormat("00").format(cal.get(Calendar.MONTH) + 1);
@@ -237,7 +235,7 @@ public class Controller {
 		return mv;
 	}
 	
-	//»ç¿ëÀÚ ÁÖ¹®³»¿ª
+	//ì‚¬ìš©ì ì£¼ë¬¸ë‚´ì—­ë³´ê¸°
 	@RequestMapping(value="orderlist.do", method = RequestMethod.GET)
 	public ModelAndView orderlist(HttpServletRequest request,@RequestParam("u") String userid) {
 	ModelAndView mv = new ModelAndView();
@@ -248,7 +246,7 @@ public class Controller {
 	return mv;
 	}
 	
-	//°ü¸®ÀÚ ÁÖ¹®³»¿ª
+	//ê´€ë¦¬ì - ëª¨ë“  ì‚¬ìš©ìì˜ ì£¼ë¬¸ ë‚´ì—­
 	@RequestMapping(value="managerlist.do", method = RequestMethod.GET)
 	public ModelAndView managerlist() {
 		ModelAndView mv = new ModelAndView();
@@ -256,7 +254,7 @@ public class Controller {
 		mv.setViewName("admin/managerList");
 		return mv;
 	}
-	// ¹è¼Û»óÅÂ º¯°æ
+	// ë°°ì†¡ìƒíƒœ
 	@RequestMapping(value="delivery.do",method = RequestMethod.POST)
 	public ModelAndView delivery(@RequestParam Map<String, String> m) {
 		ModelAndView mv = new ModelAndView();
@@ -267,7 +265,7 @@ public class Controller {
 		return mv;
 	}
 	
-	//ÁÖ¹®³»¿ª»ó¼¼
+	//ì£¼ë¬¸ë‚´ì—­ ìƒì„¸ë³´ê¸°
 	@RequestMapping(value="/deliveryview", method = RequestMethod.GET)
 	public ModelAndView deliveryview(@RequestParam("d") String orderid, Model model) {
 		ModelAndView mv = new ModelAndView();
@@ -280,13 +278,13 @@ public class Controller {
 	public String noticeGet() {
 		return "admin/notice";
 	}
-	//µî·Ï
+	//FAQ ë“±ë¡
 	@RequestMapping(value = "notice.do", method = RequestMethod.POST)
 	public String notice(@RequestParam Map<String, String> n) {
 		sv.notice(n);
 		return "../index";
 	}
-	// FAQ ¸ñ·Ï, ÆäÀÌÂ¡
+	// FAQ ë³´ê¸°, í˜ì´ì§•
 	@GetMapping("naticelist.do")
 	public ModelAndView noticelist(@RequestParam Map<String, String> m) {
 		ModelAndView mv = new ModelAndView();
@@ -297,7 +295,7 @@ public class Controller {
 		return mv;
 	}
 	
-	// FAQ »ó¼¼º¸±â
+	// FAQ ìƒì„¸ë³´ê¸°
 	@GetMapping(value="noticeview.do")
 	public ModelAndView noticeview(@RequestParam("n") int n_num) {
 		ModelAndView mv = new ModelAndView();
@@ -305,7 +303,7 @@ public class Controller {
 		mv.setViewName("admin/noticeview");
 		return mv;
 	}
-	//°Ë»ö
+	// ê²€ìƒ‰
 	@GetMapping(value="search.do")
 	public String search(String search, Model m) {
 		m.addAttribute("faq", sv.search(search));

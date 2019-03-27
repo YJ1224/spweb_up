@@ -101,7 +101,7 @@ public class Db {
 				list.add(map);
 			}
 		} catch (SQLException e) {
-			System.out.println("ResultSet�쓣 ArrayList�솕 �삁�쇅 : " + e.getMessage());
+			System.out.println("ResultSet을 ArrayList화 예외: " + e.getMessage());
 		}
 		// close
 		closeConnection();

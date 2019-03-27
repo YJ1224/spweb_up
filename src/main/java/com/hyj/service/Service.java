@@ -29,12 +29,12 @@ public class Service {
 			dao.insert(d);
 		}
 		
-		// ȸ�� ���
+		// 회원 select
 		public ArrayList<HashMap<String, String>> select() {
 			return dao.select();
 		}
 		
-		// ���̵��ߺ�Ȯ��
+		// 아이디 중복확인
 		public int idcheck(String userid){
 			if(dao.idcheck(userid).size() == 0) {
 				return -1;
@@ -43,32 +43,32 @@ public class Service {
 			}
 		}
 		
-		// ��ǰ �󼼺���
+		// 상품상세보기
 		public HashMap<String,String> view(int p_num){
 			return dao.view(p_num);
 		}
 		
-		// ��ǰ ���
+		// 상품보기
 		public ArrayList<HashMap<String, String>> imgselect(){
 			return dao.imgselect();
 		}
 		
-		// īƮ �ֱ�
+		// 카트 담기
 		public void cartinsert(String userid,int p_num,int c_stock){
 			dao.cartinsert(userid, p_num, c_stock);
 		}
 		
-		// īƮ ���
+		// 카트목록
 		public ArrayList<HashMap<String, String>> cartselect(String userid) {
 			return dao.cartselect(userid);
 		}
 		
-		// īƮ ����
+		// 부분 삭제
 		public void cartdelete(int c_num,String userid) {
 			dao.cartdelete(c_num, userid);
 		}
 		
-		// īƮ ��ü ����
+		// 전체 삭제
 		public void cartdelete1(String userid) {
 			dao.cartdelete1(userid);
 		}
@@ -78,7 +78,7 @@ public class Service {
 			return dao.cartsum(userid);
 		}
 		
-		//�ֹ��ϱ�
+		// 주문하기
 		public Map<String, String> orderinsert(String orderid,String userid,String o, String a1, String a2, String a3, 
 				String p, String c){
 			Map<String, String> order = new HashMap<String, String>(){{
@@ -93,35 +93,35 @@ public class Service {
 			return order;
 		}
 		
-		//�ֹ�����
+		// 주문상세보기
 		public void orderview(String orderid) {
 			dao.orderview(orderid);
 		}
 		
-		//�ֹ����
+		// 주문내역보기
 		public ArrayList<HashMap<String, String>> orderlist(String userid){
 			return dao.orderlist(userid);
 		}
 		
-		// �����ڿ� �ֹ����
+		// 관리자 - 모든 사용자 주문내역 보기
 		public ArrayList<HashMap<String, String>> managerlist(){
 			return dao.managercart();
 		}
 		
-		// ��ۻ���
+		// 배송상태
 		public void delivery(String delivery, String orderid) {
 			dao.delivery(delivery, orderid);
 		}
 		
-		//�ֹ�������
+		// 주문내역상세보기
 		public ArrayList<HashMap<String, String>> deliveryview(String orderid){
 			return dao.deliverview(orderid);
 		}
-		//�������׵��
+		//FAQ 등록
 		public void notice(Map<String,String> n) {
 			dao.notice(n);	
 		}
-		//�������׸��
+		// FAQ 목록, 페이징
 		public ArrayList<HashMap<String, String>> noticeselect(Map<String, String> m){
 		      String pgnum = m.get("pg");
 		      String bEanum = m.get("bEa");
@@ -137,40 +137,40 @@ public class Service {
 		      }
 			return dao.noticeselect(pgnum,bEanum);
 		}
-		//�������׻�
+		// FAQ 상세보기
 		public HashMap<String,String> noticeview(int n_num){
 			return dao.noticeview(n_num);
 		}
-		//�˻�
+		//검색
 		public ArrayList<HashMap<String, String>> search(String search){
 			return dao.search(search);
 		}
-		/*-----------------��ǰ ���-------------*/
+		/*-----------------파일업로드-------------*/
 		@Autowired 
 		String upath;
 		public Map<String, String> imginsert(String n, String s, String c,String p, String d,String cn,MultipartFile f) {
-			// �������
-			System.out.printf("�����̸� : %s", f.getOriginalFilename());
+			// 파일이름
+			System.out.printf("파일이름 : %s", f.getOriginalFilename());
 			
-			// �ʱ�
-			UUID uid = UUID.randomUUID(); //�������̵� ����
+			
+			UUID uid = UUID.randomUUID(); //랜덤생성
 			String oname = f.getOriginalFilename();
-			String fname = uid.toString() + "_" + oname; // ������ �̸�
-			// ���� ��
+			String fname = uid.toString() + "_" + oname;
+			
 			Map<String, String> finfos = new HashMap<String,String>(){{
-				put("p_name",n); //�̸�
-				put("c_code",c); //����
+				put("p_name",n); 
+				put("c_code",c); 
 				put("c_name", cn);
-				put("p_price",p); //����
-				put("p_stock",s); //����
-				put("p_des",d); //����
-				put("p_img",fname);//�̹���
+				put("p_price",p); 
+				put("p_stock",s); 
+				put("p_des",d);
+				put("p_img",fname);
 				
 				
 			}}; 
 			dao.imginsert(finfos);
 			
-			// ����ó��
+			
 			File file = new File(upath, fname);
 			try{
 				FileCopyUtils.copy(f.getBytes(), file); //���� copy
@@ -179,6 +179,7 @@ public class Service {
 				return null;
 			}
 		}
+		//페이징
 		public HashMap<String, String> pageing(Map<String, String> map) {
 		      String pgnum = map.get("pg");
 		      String bEanum = map.get("bEa");
